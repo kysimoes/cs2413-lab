@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+// Helper function to check if two trees are mirrors
+bool areMirrors(struct TreeNode* left, struct TreeNode* right) {
+    // If both are empty, they match
+    if (left == NULL && right == NULL) {
+        return true;
+    }
+    // If only one is empty, they don't match
+    if (left == NULL || right == NULL) {
+        return false;
+    }
+    // Check: 
+    // 1. Current values must be equal
+    // 2. Left's left should mirror Right's right
+    // 3. Left's right should mirror Right's left
+    return (left->val == right->val) && 
+           areMirrors(left->left, right->right) && 
+           areMirrors(left->right, right->left);
+}
+
+// Main function to check symmetry
+bool isSymmetric(struct TreeNode* root) {
+    // An empty tree is symmetric
+    if (root == NULL) {
+        return true;
+    }
+    // Check if left and right subtrees are mirrors
+    return areMirrors(root->left, root->right);
+}
